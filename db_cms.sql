@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 08, 2017 at 10:24 AM
--- Server version: 5.6.29
--- PHP Version: 5.6.25
+-- Host: localhost:3306
+-- Generation Time: Feb 08, 2017 at 02:45 AM
+-- Server version: 5.7.14
+-- PHP Version: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -53,7 +53,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `name`, `password`, `email`) VALUES
-(5, 'admin', '$2y$10$BaHvGa6UtFyItNev2a28IOSDuuuBQmIKcLWA5TZlBh94SH3rfSyo6', 'dovydastt@gmail.com');
+(5, 'admin', '$2y$10$BaHvGa6UtFyItNev2a28IOSDuuuBQmIKcLWA5TZlBh94SH3rfSyo6', 'dovydastt@gmail.com'),
+(6, 'asd', 'asd123', 'asd@asd.asdw');
 
 -- --------------------------------------------------------
 
@@ -65,15 +66,16 @@ CREATE TABLE `company_desc` (
   `Description` varchar(255) NOT NULL,
   `pictures` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `alt` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `company_desc`
 --
 
-INSERT INTO `company_desc` (`Description`, `pictures`, `title`, `id`) VALUES
-('This is Description', 'user_images/dcuk-logo.png', 'This is title', 1);
+INSERT INTO `company_desc` (`Description`, `pictures`, `title`, `id`, `alt`) VALUES
+('This is Description', 'user_images/dcuk-logo.png', 'This is title', 1, 'This is Description');
 
 -- --------------------------------------------------------
 
@@ -130,8 +132,11 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`customer_id`, `name`, `password`, `email`, `firstName`, `lastName`, `Address`, `birth`, `basket`, `up_votes`) VALUES
-(14, 'anonim', '$2y$10$VioSrbFLAsnpAvn2G9xsBuKXgm.U5HVyKbZhNK7919ernqFLuhwIW', 'dsd@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL),
-(15, 'admin', '$2y$10$UpBjkOC5Fv9Dg4Pasxm44.ccATpnKYRD4Qykij3l29r2ET55gUDDG', 'admin@admin.com', 'gfdsgfdshgggf', 'ffgfdgfsd', 'gdshgdshgdsgfds', '1982-05-25', '', '1 2 4');
+(15, 'admin', '$2y$10$UpBjkOC5Fv9Dg4Pasxm44.ccATpnKYRD4Qykij3l29r2ET55gUDDG', 'admin@admin.com', 'gfdsgfdshgggf', 'ffgfdgfsd', 'gdshgdshgdsgfds', '1982-05-25', '1', '4'),
+(21, 'test', '$2y$10$YzYs/6QiHFs/CbG0d78k7.c//eJ4Kj7pXkJ/kcziEpNXxnZSXd93q', 'dovydaswow@gmail.com', 'Dovydas', 'Tamulis', 'Thulevej 50', '1995-01-13', NULL, NULL),
+(22, 'user', '$2y$10$I6gByGkKbHU6JGPXC2DbWOiJK96Q1Y2E/oQayIeOMj9/NXcLUrkiW', 'dovydastt@gmail.com', 'Dovydas', 'Tamulis', 'Thulevej 50', '1995-01-13', NULL, NULL),
+(23, 'testing', '$2y$10$hFy1eikrkyXBVRVb4dZriuLD2ebBhlUmJ4YANzzsqzNyowvREiqZi', 'nonamer@gmail.com', 'Dovydas', 'Tamulis', 'Kirkevej 50', '1995-01-13', NULL, NULL),
+(24, 'dovi', '$2y$10$Q6B9WSpE5eLpfEFLucEMWufE7R85uGQKY5k3CAfqEI1t8U8VGGQra', 'dovi@gmail.com', 'Dovydas', 'Tamulis', 'Thulevej 50', '1995-01-13', '', '');
 
 -- --------------------------------------------------------
 
@@ -140,20 +145,22 @@ INSERT INTO `customers` (`customer_id`, `name`, `password`, `email`, `firstName`
 --
 
 CREATE TABLE `daily_product` (
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `Product_ID` int(20) NOT NULL
+  `date` timestamp NOT NULL,
+  `movie_id` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `daily_product`
 --
 
-INSERT INTO `daily_product` (`date`, `Product_ID`) VALUES
-('2016-11-15 13:19:40', 1),
-('2016-11-15 13:19:51', 2),
+INSERT INTO `daily_product` (`date`, `movie_id`) VALUES
 ('2016-11-15 13:19:57', 3),
 ('2016-11-15 13:20:02', 4),
-('2016-11-15 13:20:08', 5);
+('2016-12-15 15:56:35', 3),
+('2016-12-17 21:53:58', 3),
+('2017-01-30 11:45:42', 16),
+('2017-02-07 14:34:56', 1),
+('2017-02-07 14:35:02', 9);
 
 -- --------------------------------------------------------
 
@@ -168,11 +175,24 @@ CREATE TABLE `movie` (
   `img` varchar(255) NOT NULL,
   `director` varchar(255) NOT NULL,
   `year` int(4) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` timestamp NOT NULL,
   `alt` varchar(255) NOT NULL,
-  `youtube` varchar(20) NOT NULL,
-  `price` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `youtube` varchar(50) NOT NULL,
+  `price` int(50) NOT NULL,
+  `tags` varchar(255) NOT NULL,
+  `upVote` int(15) NOT NULL,
+  `views` int(15) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `movie`
+--
+
+INSERT INTO `movie` (`movie_id`, `movie_title`, `movie_desc`, `img`, `director`, `year`, `date`, `alt`, `youtube`, `price`, `tags`, `upVote`, `views`) VALUES
+(1, 'Inception', 'A thief, who steals corporate secrets through use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.', 'web_images/inception.jpg', 'Christopher Nolan', 2010, '2017-02-07 11:06:37', 'inception', 'https://www.youtube.com/watch?v=YoHD9XEInc0', 50, 'Action Sci-Fi', 0, 0),
+(5, 'Matrix', 'A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.', 'web_images/matrix.jpg', 'Lana Wachowski, Lilly Wachowski', 1999, '2017-02-07 12:50:02', 'Matrix', 'https://www.youtube.com/watch?v=vKQi3bBA1y8', 20, 'Action Sci-Fi', 0, 0),
+(7, 'Matrix - Revolutions', 'The human city of Zion defends itself against the massive invasion of the machines as Neo fights to end the war at another front while also opposing the rogue Agent Smith.', 'web_images/revolutions.jpg', 'Lana Wachowski, Lilly Wachowski', 2003, '2017-02-07 13:55:01', 'matrix revolutions', 'https://www.youtube.com/watch?v=hMbexEPAOQI', 20, 'Action Sci-Fi', 0, 0),
+(9, 'Matrix Reloaded', 'Neo and the rebel leaders estimate that they have 72 hours until 250,000 probes discover Zion and destroy it and its inhabitants. During this, Neo must decide how he can save Trinity from a dark fate in his dreams.', 'web_images/reloaded.jpg', 'Lana Wachowski, Lilly Wachowski', 2003, '2017-02-07 13:59:19', 'Matrix Reloaded', 'https://www.youtube.com/watch?v=c-MS9mR_Qzg', 29, 'Action Sci-Fi', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -184,19 +204,19 @@ CREATE TABLE `newspage` (
   `Page_ID` int(11) NOT NULL,
   `Image` varchar(255) NOT NULL,
   `Description` text NOT NULL,
-  `DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `DATE` timestamp NOT NULL,
   `Header` varchar(255) DEFAULT NULL,
-  `alt_tag` varchar(255) NOT NULL
+  `alt` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `newspage`
 --
 
-INSERT INTO `newspage` (`Page_ID`, `Image`, `Description`, `DATE`, `Header`, `alt_tag`) VALUES
-(1, 'gravity.jpg', 'Gravitational waves are \'ripples\' in the fabric of space-time caused by some of the most violent and energetic processes in the Universe. Albert Einstein predicted the existence of gravitational waves in 1916 in his general theory of relativity.', '2016-11-10 22:50:11', 'Gravity still undefined...', ''),
-(2, 'home.jpg', 'But while those dreams havent materialised just yet, it hasnt stopped visionaries from imagining what a human colony on the red planet might look like in the future.', '2016-11-20 12:12:30', 'Our new homeee?', ''),
-(3, 'quasars.jpg', 'Shining so brightly that they eclipse the ancient galaxies that contain them, quasars are distant objects powered by black holes a billion times as massive as our sun. These powerful dynamos have fascinated astronomers since their discovery half a century ago.', '2016-11-10 22:52:13', 'Quasars are cool!', '');
+INSERT INTO `newspage` (`Page_ID`, `Image`, `Description`, `DATE`, `Header`, `alt`) VALUES
+(9, 'web_images/dark.jpg', '', '2017-02-07 15:01:13', '', 'dark knight rises'),
+(10, 'web_images/pacific.jpg', '', '2017-02-07 15:02:26', '', 'Pacific Rim'),
+(11, 'web_images/expandables.jpg', '', '2017-02-07 15:03:21', '', 'expandables');
 
 -- --------------------------------------------------------
 
@@ -207,7 +227,7 @@ INSERT INTO `newspage` (`Page_ID`, `Image`, `Description`, `DATE`, `Header`, `al
 CREATE TABLE `orders` (
   `Order_No` int(20) NOT NULL,
   `BoughtID` int(20) NOT NULL,
-  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Date` timestamp NOT NULL,
   `customer_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -224,36 +244,37 @@ CREATE TABLE `products` (
   `description` varchar(255) NOT NULL,
   `color` varchar(20) NOT NULL,
   `size` varchar(15) NOT NULL,
-  `category` varchar(20) NOT NULL,
+  `material` varchar(20) NOT NULL,
   `images` varchar(255) NOT NULL,
   `stock` int(255) NOT NULL,
   `tags` varchar(50) NOT NULL,
   `manufacture` varchar(100) NOT NULL,
   `views` int(15) DEFAULT NULL,
-  `upVote` int(15) DEFAULT NULL
+  `upVote` int(15) DEFAULT NULL,
+  `alt` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`Product_ID`, `name`, `price`, `description`, `color`, `size`, `category`, `images`, `stock`, `tags`, `manufacture`, `views`, `upVote`) VALUES
-(1, '     Blue duck', 6.99, '     description of blue duck', '     bluee', '     SM small', '     small blue     ', 'user_images/duck_blue.png', 888, '   blue-sm             ', '     china', 157, 8),
-(2, '  Blue duck', 6.99, '  description of blue duck', '  blue', ' SM small', '  small blue        ', 'user_images/duck_blue.png', 106, '  blue-sm        ', '  china', 129, 11),
-(3, 'Green duck', 15.99, 'awesome duck description', 'green', 'Big XXL', 'Green ducks   ', 'user_images/duck_green.png', 123, 'awesome duck   ', 'germany', 27, 4),
-(4, ' Purple duck', 6.99, ' description of purple duck', ' purple', ' SM small', ' small pruple ', 'user_images/duck_purple.png', 13, ' purple-sm ', ' china', 11, 4),
-(5, 'Purple duck', 6.99, 'description of purple duck', 'purple', 'SM small', 'small pruple', 'user_images/duck_purple.png', 12, 'purple-sm', 'china', 3, 0),
-(6, '  Green duck', 15.99, '  awesome duck description', '  green', '  Big XXL', '  Green ducks  ', 'user_images/duck_green.png', 4, '  awesome duck  ', '  china', 3, 1),
-(7, '  Yellow duck', 14.99, '  awesome duck description', '  yellow', '  Big XXL', '  Yellow ducks  ', 'user_images/duck_yellow.png', 56, '  awesome duck  ', '  china', 4, 1),
-(8, ' Yellow duck', 7.55, ' awesome duck description', ' yellow', ' Big XXL', ' Yellow ducks ', 'user_images/duck_yellow.png', 56, ' awesome duck ', ' china', 4, 1),
-(14, ' NiceDuck', 45.99, 'Very nice but expensive duck', 'colorful', 'Tiny', 'none', 'user_images/duck_blue.png', 68, 'none', 'Portugal', 1, 0),
-(15, ' Duckuyyy', 5.99, 'something awesome', 'yellow', 'big', 'asdas', 'user_images/duck_yellow.png', 455, 'sdsds', 'denmark', 6, 0),
-(16, 'Psy Duck', 99.99, 'Psycho duck from pokemon.', 'yellow', 'L', 'Special', 'user_images/duck_yellow.png', 2, 'special psy pokemon duck yellow limited edition', 'Japan', 0, 0),
-(17, ' polymorph duck', 26, ' polymorph', 'red', 'XS', ' ', 'user_images/duck_purple.png', 5, ' rare poly moph duck red ', ' China', 0, 0),
-(18, ' Giarados duck', 999.99, 'Evolved from magickarp', 'water blue', 'XL', 'Special', 'user_images/duck_blue.png', 99, 'pokemon giarados blue water Ash magickarp ', 'Ash', 0, 0),
-(19, ' Bulbasourus', 99, 'Not a first choice', 'green', 'S', ' ', 'user_images/duck_green.png', 45, 'leaf green grass pokemon never gets old', 'america', 0, 0),
-(20, 'Sick duck', 995, 'Something is wrong with this one', 'Violet', 'M', ' ', 'user_images/duck_purple.png', 78, 'vodka sick duck hangover', 'Russia', 2, 0),
-(21, 'Ordinary duck', 45, ' Very first choice of any collector', 'Yellow', 'M', ' ', 'user_images/duck_yellow.png', 23, 'ordinary common first collecting casual ', 'Denmark', 0, 0);
+INSERT INTO `products` (`Product_ID`, `name`, `price`, `description`, `color`, `size`, `material`, `images`, `stock`, `tags`, `manufacture`, `views`, `upVote`, `alt`) VALUES
+(1, 'Blue duck', 6.99, 'Description of blue duck', 'Blue', 'S', 'rubber', 'user_images/duck_blue.png', 888, 'small china rubber rare blue', 'China', 322, 27, ''),
+(2, 'Blue duck', 6.99, 'Description of blue duck', 'Blue', 'SM', 'Iron', 'user_images/duck_blue.png', 106, 'blue iron china sm', 'China', 352, 13, 'Blue polly duck'),
+(3, 'Green duck', 15.99, 'awesome duck description', 'Green', 'XXL', 'Pvc', 'user_images/duck_green.png', 123, 'germany pvc green xxl', 'Germany', 124, 9, ''),
+(5, 'Purple duck', 6.99, 'description of purple duck', 'purple', 'SM small', 'small pruple', 'user_images/duck_purple.png', 12, 'purple-sm', 'china', 43, 0, 'Purple duck'),
+(6, 'Green duck', 15.99, 'awesome duck description', 'green', 'XXL', 'rubber', 'user_images/duck_green.png', 4, 'rubber xxl china green', 'china', 21, 2, ''),
+(7, 'Yellow duck', 14.99, 'awesome duck description', 'yellow', 'Big XXL', 'wood', 'user_images/duck_yellow.png', 56, 'wood xxl yellow china', 'china', 21, 2, ''),
+(8, 'Yellow duck', 7.55, 'awesome duck description', 'yellow', 'XXL', 'plastic', 'user_images/duck_yellow.png', 56, 'xxl china yellow plastic', 'china', 15, 2, ''),
+(14, 'NiceDuck', 45.99, 'Very nice but expensive duck', 'colorful', 'XS', 'saphire', 'user_images/duck_blue.png', 68, 'rare saphire xs portugal', 'Portugal', 6, 0, ''),
+(15, 'Duckuyyy', 5.99, 'something awesome', 'yellow', 'L', 'valerian', 'user_images/duck_yellow.png', 455, 'l valerian denmark yellow', 'Denmark', 16, 0, 'yellow duck'),
+(16, 'Psy Duck', 99.99, 'Psycho duck from pokemon.', 'yellow', 'L', 'cobalt', 'user_images/duck_yellow.png', 2, 'special psy pokemon duck yellow limited edition', 'Japan', 4, 0, ''),
+(17, 'Polymorph duck', 26, 'polymorph', 'red', 'XS', 'demaskus', 'user_images/duck_purple.png', 5, 'rare poly morph duck red', 'China', 9, 0, ''),
+(18, 'Giarados duck', 999.99, 'Evolved from magickarp', 'water blue', 'XL', 'Meat', 'user_images/duck_blue.png', 99, 'pokemon giarados blue water Ash magickarp', 'Ash', 4, 1, ''),
+(19, 'Bulbasourus', 99, 'Not a first choice', 'green', 'S', 'meat', 'user_images/duck_green.png', 45, 'leaf green grass pokemon never gets old', 'america', 3, 0, ''),
+(20, 'Sick duck', 995, 'Something is wrong with this one', 'Violet', 'M', ' meat', 'user_images/duck_purple.png', 78, 'vodka sick duck hangover', 'Russia', 6, 0, ''),
+(21, 'Ordinary duck', 45, ' Very first choice of any collector', 'Yellow', 'M', ' Iron', 'user_images/duck_yellow.png', 23, 'ordinary common first collecting casual', 'Denmark', 4, 1, ''),
+(22, 'Blet duck', 100000000, 'blet duck awesome', 'crimson', 'XXXL', 'iron', 'user_images/duck_blue.png', 99, 'crimson duck awesome blet xxxl', 'china ', 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -302,25 +323,37 @@ CREATE TABLE `search_history` (
 --
 
 CREATE TABLE `social_pages` (
-  `Product_ID` int(20) NOT NULL,
   `Likes` int(15) NOT NULL,
   `Comments` text NOT NULL,
   `name` varchar(50) NOT NULL,
-  `comment_id` int(11) NOT NULL
+  `comment_id` int(11) NOT NULL,
+  `Product_ID` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `social_pages`
 --
 
-INSERT INTO `social_pages` (`Product_ID`, `Likes`, `Comments`, `name`, `comment_id`) VALUES
-(1, 0, ' whats up ', 'Nerijus', 1),
-(1, 0, ' whats up ', 'Nerijus', 2),
-(15, 0, ' gdsagds ', 'd', 3),
-(15, 0, ' gdsagds ', 'd', 4),
-(15, 0, ' dd ', 'd', 5),
-(1, 0, ' gfasgfas ', 'gfadsgfa', 6),
-(1, 0, ' bla\r\n ', 'nerijus', 7);
+INSERT INTO `social_pages` (`Likes`, `Comments`, `name`, `comment_id`, `Product_ID`) VALUES
+(1, ' whats up ', 'Nerijus', 1, 1),
+(1, ' whats up ', 'Nerijus', 2, 1),
+(0, ' gdsagds ', 'd', 3, 1),
+(1, ' gdsagds ', 'd', 4, 1),
+(1, ' dd ', 'd', 5, 1),
+(1, ' gfasgfas ', 'gfadsgfa', 6, 1),
+(0, ' bla\r\n ', 'nerijus', 7, 1),
+(7, 'bum\r\n', 'admin', 9, 2),
+(2, 'gfdsfds', 'admin', 10, 2),
+(1, 'shazam\r\n', 'admin', 11, 8),
+(0, 'gfdsgfdsgfdgfdsgfsd', 'admin', 12, 1),
+(0, 'gfdsgfdsgfdgfdsgfsd', 'admin', 13, 1),
+(0, 'gfdsgfdsgfdgfdsgfsd', 'admin', 14, 1),
+(0, 'gfdsgfdsgfdgfdsgfsd', 'admin', 15, 1),
+(0, 'whatever\r\n\r\n', 'admin', 16, 4),
+(0, 'whatever\r\n\r\n', 'admin', 17, 4),
+(0, 'whatever\r\n', 'admin', 18, 3),
+(0, 'whatever\r\n', 'admin', 19, 3),
+(0, 'nice product', 'user', 20, 3);
 
 -- --------------------------------------------------------
 
@@ -385,7 +418,7 @@ ALTER TABLE `customers`
 -- Indexes for table `daily_product`
 --
 ALTER TABLE `daily_product`
-  ADD KEY `Product_ID` (`Product_ID`);
+  ADD KEY `Product_ID` (`movie_id`);
 
 --
 -- Indexes for table `movie`
@@ -429,8 +462,7 @@ ALTER TABLE `search_history`
 -- Indexes for table `social_pages`
 --
 ALTER TABLE `social_pages`
-  ADD PRIMARY KEY (`comment_id`),
-  ADD KEY `Product_ID` (`Product_ID`);
+  ADD PRIMARY KEY (`comment_id`);
 
 --
 -- Indexes for table `sold_products`
@@ -453,7 +485,7 @@ ALTER TABLE `temp_user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `admin_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `company_desc`
 --
@@ -468,17 +500,17 @@ ALTER TABLE `contact_info`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `customer_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `newspage`
 --
 ALTER TABLE `newspage`
-  MODIFY `Page_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Page_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `orders`
 --
@@ -488,7 +520,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `Product_ID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `Product_ID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `product_order`
 --
@@ -498,7 +530,7 @@ ALTER TABLE `product_order`
 -- AUTO_INCREMENT for table `social_pages`
 --
 ALTER TABLE `social_pages`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `sold_products`
 --
@@ -526,12 +558,6 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `search_history`
   ADD CONSTRAINT `search_history_ibfk_1` FOREIGN KEY (`Product_ID`) REFERENCES `products` (`Product_ID`);
-
---
--- Constraints for table `social_pages`
---
-ALTER TABLE `social_pages`
-  ADD CONSTRAINT `social_pages_ibfk_1` FOREIGN KEY (`Product_ID`) REFERENCES `products` (`Product_ID`);
 
 --
 -- Constraints for table `sold_products`
