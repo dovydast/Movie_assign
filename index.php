@@ -139,18 +139,18 @@ if(session::get("error") != ""){
                         var output = '';
                         var count = 0;
                     $.each(data, function (key, val) {
-                        if ((val.name.search(txt) != -1) || (val.tags.search(txt) != -1)) {
+                        if ((val.movie_title.search(txt) != -1) || (val.alt.search(txt) != -1)) {
                             var tags = val.tags.split(" ");
                             output += '<div class=" col-md-3 item-por">'+
                                 '<div class="items">' +
-                                '<a href="/Movie_assign/main/product?p=' + val.Product_ID + '">' +
+                                '<a href="/Movie_assign/main/product?p=' + val.movie_id+ '">' +
                                 '<div class="itemWhite">' +
-                                '<img class="itemPicture" src="/Movie_assign/assets/' + val.images + '">' +
+                                '<img class="itemPicture" src="/Movie_assign/assets/' + val.img + '">' +
                                 '</div>' +
                                 '<div class="itemInfoHide caption">' +
                                 '<div class="transitionInformation">' +
                                 '<h4>' +
-                                '<strong>' + val.name + '</strong>' +
+                                '<strong>' + val.movie_title + '</strong>' +
                                 '</h4>' +
                                 '<h4>' + val.price + ' DKK</h4>' +
                                 '<h4>' + val.upVote + '</h4>' +

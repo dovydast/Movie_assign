@@ -13,10 +13,7 @@ class main extends controller {
         main::head();
         load::view("main::index",$data);
         main::foot();
-        if(isset($_POST["lead"])){
-            $posts->discounted("");
-            load::view("main::discount");
-        }
+
     }
     static function ajax(){
         if(isset($_POST["add_to_cart"])){

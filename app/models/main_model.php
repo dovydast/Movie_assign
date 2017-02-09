@@ -80,7 +80,7 @@ class main_model extends model {
             $responseData = json_decode($verifyResponse);
             if ($responseData->success) {
 
-                $this->model->query("INSERT INTO `social_pages` (`name`,`Product_ID`,`Comments`,`Likes`) VALUES(?,?,?,'0')",
+                $this->model->query("INSERT INTO `social_pages` (`name`,`Product_ID`,`Comments`,`Likes`) VALUES(?,?,?,0)",
                     array( common::clean($username),  common::clean($id),  common::clean($comment)));
                 message::note("success!");
                 url::reload();
