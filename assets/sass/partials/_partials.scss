@@ -354,3 +354,90 @@ $dark-tint: rgba(0,0,0,0.9);
 #postNew {
     padding: 20px;
 }
+
+.well {
+  background: rgba(255, 255, 255, 0.8);
+  margin-left: 20px;
+  margin-right: 20px;
+  box-shadow: 0.5px 0.5px 2px black;
+    border: lightgray solid 1px;
+    border-radius: 0px;
+}
+
+.formtable {
+  display: table;
+  padding: 10px;
+  margin: 20px;
+}
+.formtable tr {
+  height: 50px;
+}
+  .formtable tr td {
+    padding: 10px;
+  }
+
+.label, .label-danger {
+  background-color: #16a085;
+}
+
+.transitionInformation {
+  color: black;
+}
+
+.itemWhite {
+  height: 300px;
+}
+ 
+.itemPicture {
+  height: 250px;
+}
+
+.jumbotron .formtable tr {
+  height: 10px;
+  padding: 0px;
+}
+  .jumbotron .formtable tr td {
+  font-weight: bold;
+}
+
+.label-primary {
+  background: #16a085;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.8);
+  margin-left: 20px;
+  margin-right: 20px;
+  box-shadow: 0.5px 0.5px 2px black;
+    border: lightgray solid 1px;
+    border-radius: 0px;
+}
+
+.btn {
+  background: #16a085;
+  box-shadow: 0.5px 0.5px 2px black;
+    border-radius: 0px;
+    border: 1px outset #16a085;
+    box-shadow: 1px 1px 1px black;
+}
+
+.btn:hover {
+  box-shadow: none;
+  background: #16a085;
+  border: 1px inset #16a085;
+  color: white !important;
+}
+
+.badge {
+  background: #16a085;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 1);
+  margin-left: 20px;
+  margin-right: 20px;
+  box-shadow: 0.5px 0.5px 2px black;
+    border: lightgray solid 1px;
+    border-radius: 0px;
+
+}
